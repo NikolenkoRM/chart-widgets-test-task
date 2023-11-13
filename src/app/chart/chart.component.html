@@ -1,0 +1,33 @@
+<canvas class="cursor-grab active:cursor-grabbing" [id]="chartId"></canvas>
+<form class="grid grid-cols-2 gap-2 mt-2" [formGroup]="chartForm">
+  <mat-form-field class="col-span-2">
+    <mat-label>Sensors</mat-label>
+    <mat-select formControlName="sensors" multiple>
+      <mat-option *ngFor="let sensor of sensors" [value]="sensor">
+        {{ sensor | titlecase }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Color of chart</mat-label>
+    <mat-icon matPrefix [style.color]="chartForm.get('color')?.value">
+      circle
+    </mat-icon>
+    <mat-select formControlName="color">
+      <mat-option *ngFor="let color of chartColors" [value]="color.hex">
+        <mat-icon [style.color]="color.hex">circle</mat-icon>
+        <span>{{ color.name }}</span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Type of chart</mat-label>
+    <mat-select formControlName="type">
+      <mat-option *ngFor="let type of chartTypes" [value]="type">
+        {{ type | titlecase }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

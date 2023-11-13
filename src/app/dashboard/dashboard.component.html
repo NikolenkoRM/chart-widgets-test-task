@@ -1,0 +1,57 @@
+<mat-toolbar [style]="{ height: 'auto' }" color="primary">
+  <div class="w-full flex items-baseline pt-4 px-2">
+    <div class="flex-1"><h1>Chart Widgets</h1></div>
+    <div class="flex">
+      <button
+        class="mr-4"
+        mat-fab
+        color="accent"
+        matTooltip="Add chart"
+        [disabled]="chartIds.length === maxCharts"
+        (click)="addChart()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <mat-form-field class="flex-1">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input
+          [rangePicker]="picker"
+          [formGroup]="range"
+          [max]="maxDate"
+        >
+          <input
+            matStartDate
+            formControlName="start"
+            placeholder="Start date"
+          />
+          <input matEndDate formControlName="end" placeholder="End date" />
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker">
+        </mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </div>
+  </div>
+</mat-toolbar>
+
+<div class="grid grid-cols-2 gap-8 p-8">
+  <div
+    class="relative border rounded shadow-lg p-4"
+    *ngFor="let chartId of chartIds; let i = index"
+  >
+    <button
+      *ngIf="chartIds.length > 1"
+      class="top-0 right-0"
+      [style]="{ position: 'absolute' }"
+      mat-icon-button
+      color="warn"
+      (click)="removeChart(i)"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    <app-chart [chartId]="chartId" [dateRange]="range.value"></app-chart>
+  </div>
+</div>
